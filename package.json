@@ -1,0 +1,20 @@
+{
+  "name": "test-beckend",
+  "version": "1.0.0",
+  "description": "Trying to pass js test",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "try-me": "curl http://localhost:4000/no-auth"
+  },
+  "keywords": [],
+  "author": "Quidmy",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^2.3.0",
+    "fastify-bcrypt": "^0.1.0",
+    "fastify-plugin": "^3.0.0",
+    "reusify": "^1.0.4",
+    "sequelize": "^6.6.2"
+  }
+}
