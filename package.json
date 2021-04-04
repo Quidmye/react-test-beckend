@@ -15,6 +15,7 @@
     "fastify-bcrypt": "^0.1.0",
     "fastify-plugin": "^3.0.0",
     "reusify": "^1.0.4",
-    "sequelize": "^6.6.2"
+    "sequelize": "^6.6.2",
+    "fastify-postgres": "^3.5.0"
   }
 }
