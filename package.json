@@ -8,7 +8,7 @@
     "try-me": "curl http://localhost:4000/no-auth"
   },
   "keywords": [],
-  "author": "Quidmy",
+  "author": "Quidmye",
   "license": "MIT",
   "dependencies": {
     "fastify": "^2.3.0",
