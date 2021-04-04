@@ -12,10 +12,12 @@
   "license": "MIT",
   "dependencies": {
     "fastify": "^2.3.0",
-    "fastify-bcrypt": "^0.1.0",
+    "fastify-cors": "^5.2.0",
+    "fastify-jwt": "^2.4.0",
     "fastify-plugin": "^3.0.0",
+    "fastify-postgres": "^3.5.0",
+    "password-hash": "^1.2.2",
     "reusify": "^1.0.4",
-    "sequelize": "^6.6.2",
-    "fastify-postgres": "^3.5.0"
+    "sequelize": "^6.6.2"
   }
 }

@@ -8,9 +8,6 @@ function build(opts) {
     const fastify = Fastify(opts)
 
     fastify.register(require('fastify-jwt'), {secret: 'supersecret'})
-    fastify.register(require('fastify-bcrypt'), {
-        saltWorkFactor: 12
-    })
     fastify.register(require('./auth'))
     fastify.register(require('fastify-cors'), {origin: true})
     fastify.after(routes)
@@ -42,7 +39,6 @@ function build(opts) {
             if (!user.password || user.password !== decoded.password) {
                 return done(new Error('Token not valid'))
             }
-
             done()
         }
     }
@@ -52,8 +48,8 @@ function build(opts) {
         if (!request.body || !request.body.username || !request.body.password) {
             return done(new Error('Missing user in request body'))
         }
-        request.body.password = await fastify.bcrypt.hash(request.body.password);
         let user = await User.findOne({where: request.body});
+
         onUser(user);
 
         function onUser(user) {
@@ -96,12 +92,10 @@ function build(opts) {
             handler: async (req, reply) => {
                 req.log.info('Creating new user');
                 let user = req.body;
-                user.password = await fastify.bcrypt.hash(user.password);
-                console.log(user.password)
                 User.afterCreate(async (user, options) => onPut());
                 let userCreated = await User.create(user, (err, user) => {
                     if (!err) {
-                        app.jwt.sign(req.body, onToken)
+                        fastify.jwt.sign(req.body, onToken)
                     } else {
                         reply.code(422).send({error: err})
                     }
@@ -167,7 +161,9 @@ function build(opts) {
             preHandler: fastify.auth([fastify.verifyJWTandLevelDB]),
             handler: async (req, reply) => {
                 req.log.info('Auth route')
+
                 let user = await User.findOne({where: {username: fastify.jwt.decode(req.headers.auth).username}});
+                console.log(user)
                 const data = {
                     value: req.body.data,
                     user_id: user.id
