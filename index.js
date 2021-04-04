@@ -52,7 +52,7 @@ function build(opts) {
         if (!request.body || !request.body.username || !request.body.password) {
             return done(new Error('Missing user in request body'))
         }
-        request.body.password = fastify.bcrypt.hash(request.body.password);
+        request.body.password = await fastify.bcrypt.hash(request.body.password);
         let user = await User.findOne({where: request.body});
         onUser(user);
 
@@ -96,7 +96,8 @@ function build(opts) {
             handler: async (req, reply) => {
                 req.log.info('Creating new user');
                 let user = req.body;
-                user.password = fastify.bcrypt.hash(user.password);
+                user.password = await fastify.bcrypt.hash(user.password);
+                console.log(user.password)
                 User.afterCreate(async (user, options) => onPut());
                 let userCreated = await User.create(user, (err, user) => {
                     if (!err) {
